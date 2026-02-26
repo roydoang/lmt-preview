@@ -279,6 +279,7 @@
             justify-content: space-between;
             align-items: flex-start;
             height: 100%;
+            position: relative; /* Ditambahkan agar badge OPEN/CLOSE dapat menyesuaikan posisi */
         }
 
         .job-card h3 { font-size: 1.4rem; margin-bottom: 10px; }
@@ -707,6 +708,7 @@
 
             <div class="job-grid">
                 <div class="job-card" data-aos="flip-left">
+                    <span style="position: absolute; top: 15px; right: 15px; background-color: #22c55e; color: white; padding: 5px 12px; border-radius: 15px; font-size: 0.8rem; font-weight: bold; letter-spacing: 1px;">OPEN</span>
                     <div>
                         <span class="job-tag">Internship</span>
                         <h3>Marketing Intern</h3>
@@ -718,12 +720,13 @@
                 </div>
 
                 <div class="job-card" data-aos="flip-left">
+                    <span style="position: absolute; top: 15px; right: 15px; background-color: #ef4444; color: white; padding: 5px 12px; border-radius: 15px; font-size: 0.8rem; font-weight: bold; letter-spacing: 1px;">CLOSE</span>
                     <div>
                         <span class="job-tag">Entry Level</span>
                         <h3>Administration Staff</h3>
                         <p style="color: rgba(255,255,255,0.8);"><i class="fas fa-map-marker-alt"></i> Jakarta (On-site) <br> <i class="fas fa-clock"></i> Full Time</p>
                     </div>
-                    <a href="javascript:void(0)" onclick="openModal('Administration Staff')" class="btn btn-primary" style="background: white; color: var(--accent); width: 100%; text-align: center; margin-top: 20px;">
+                    <a href="javascript:void(0)" class="btn btn-primary" style="background: #94a3b8; color: white; width: 100%; text-align: center; margin-top: 20px; pointer-events: none; cursor: not-allowed; box-shadow: none;">
                         Apply Now
                     </a>
                 </div>
