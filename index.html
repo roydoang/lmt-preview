@@ -1097,13 +1097,16 @@
             });
         });
 
-        // 2. Fungsi saat web BARU DIBUKA bawa URL khusus (misal /about)
+       // 2. Fungsi saat web BARU DIBUKA bawa URL khusus (misal /careers atau /careers/)
         window.addEventListener('DOMContentLoaded', () => {
-            const path = window.location.pathname; // Baca link, contoh: "/about"
+            let path = window.location.pathname; 
             
-            // Kalau panjang linknya lebih dari sekadar "/"
-            if (path.length > 1) {
-                const targetId = '#' + path.substring(1); // Ubah "/about" jadi "#about"
+            // Bersihkan garis miring di awal dan akhir (misal "/careers/" otomatis jadi "careers")
+            path = path.replace(/^\/|\/$/g, '');
+            
+            // Kalau setelah dibersihkan ada isinya (bukan halaman depan doang)
+            if (path.length > 0) {
+                const targetId = '#' + path; // Ubah "careers" jadi "#careers"
                 const targetElement = document.querySelector(targetId);
                 
                 if (targetElement) {
@@ -1117,5 +1120,6 @@
     </script>
 </body>
 </html>
+
 
 
