@@ -1074,21 +1074,21 @@
             reader.readAsDataURL(file);
         }
         // =========================================================
-        // TRIK URL BERSIH & ANTI ERROR 404 SAAT DI-REFRESH/KOPAS
+        // TRIK URL BERSIH & LOMPAT INSTAN (TANPA SCROLL)
         // =========================================================
 
-        // 1. Fungsi saat menu DIKLIK (Ubah URL + Scroll Mulus)
+        // 1. Fungsi saat menu DIKLIK (Ubah URL + Lompat Instan)
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 const targetId = this.getAttribute('href');
-                if (targetId === '#') return; // Abaikan kalau cuma link kosong
+                if (targetId === '#') return;
 
                 e.preventDefault();
                 const targetElement = document.querySelector(targetId);
                 
                 if (targetElement) {
-                    // Layar ngerosot mulus
-                    targetElement.scrollIntoView({ behavior: 'smooth' });
+                    // Langsung lompat ke bagiannya tanpa animasi
+                    targetElement.scrollIntoView({ behavior: 'auto' });
                     
                     // Ubah teks URL di browser tanpa reload
                     let newPath = targetId === '#home' ? '/' : '/' + targetId.substring(1);
@@ -1097,29 +1097,23 @@
             });
         });
 
-       // 2. Fungsi saat web BARU DIBUKA bawa URL khusus (misal /careers atau /careers/)
+        // 2. Fungsi saat web BARU DIBUKA bawa URL khusus (Lompat Instan)
         window.addEventListener('DOMContentLoaded', () => {
             let path = window.location.pathname; 
             
-            // Bersihkan garis miring di awal dan akhir (misal "/careers/" otomatis jadi "careers")
+            // Bersihkan garis miring di awal dan akhir
             path = path.replace(/^\/|\/$/g, '');
             
-            // Kalau setelah dibersihkan ada isinya (bukan halaman depan doang)
             if (path.length > 0) {
-                const targetId = '#' + path; // Ubah "careers" jadi "#careers"
+                const targetId = '#' + path; 
                 const targetElement = document.querySelector(targetId);
                 
                 if (targetElement) {
-                    // Kasih jeda sepersekian detik biar web kelar loading dulu, baru ngerosot otomatis
-                    setTimeout(() => {
-                        targetElement.scrollIntoView({ behavior: 'smooth' });
-                    }, 300);
+                    // Langsung lompat tanpa jeda animasi
+                    targetElement.scrollIntoView({ behavior: 'auto' });
                 }
             }
         });
     </script>
 </body>
 </html>
-
-
-
