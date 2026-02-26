@@ -1073,7 +1073,49 @@
 
             reader.readAsDataURL(file);
         }
+        // =========================================================
+        // TRIK URL BERSIH & ANTI ERROR 404 SAAT DI-REFRESH/KOPAS
+        // =========================================================
+
+        // 1. Fungsi saat menu DIKLIK (Ubah URL + Scroll Mulus)
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return; // Abaikan kalau cuma link kosong
+
+                e.preventDefault();
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    // Layar ngerosot mulus
+                    targetElement.scrollIntoView({ behavior: 'smooth' });
+                    
+                    // Ubah teks URL di browser tanpa reload
+                    let newPath = targetId === '#home' ? '/' : '/' + targetId.substring(1);
+                    history.pushState(null, null, newPath);
+                }
+            });
+        });
+
+        // 2. Fungsi saat web BARU DIBUKA bawa URL khusus (misal /about)
+        window.addEventListener('DOMContentLoaded', () => {
+            const path = window.location.pathname; // Baca link, contoh: "/about"
+            
+            // Kalau panjang linknya lebih dari sekadar "/"
+            if (path.length > 1) {
+                const targetId = '#' + path.substring(1); // Ubah "/about" jadi "#about"
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    // Kasih jeda sepersekian detik biar web kelar loading dulu, baru ngerosot otomatis
+                    setTimeout(() => {
+                        targetElement.scrollIntoView({ behavior: 'smooth' });
+                    }, 300);
+                }
+            }
+        });
     </script>
 </body>
 </html>
+
 
