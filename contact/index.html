@@ -783,7 +783,7 @@
         </div>
     </footer>
 
-    <a href="https://wa.me/6281234567890" target="_blank" class="floating-cs">
+    <a href="https://wa.me/628170291701" target="_blank" class="floating-cs">
         <i class="fab fa-whatsapp" style="font-size: 1.5rem;"></i> <span>WhatsApp</span>
     </a>
 
@@ -805,7 +805,7 @@
                     </div>
                     <div class="form-group">
                         <label class="required">Phone / WhatsApp Number</label>
-                        <input type="tel" id="nohp" placeholder="Example: 0812345678" pattern="[0-9]+" inputmode="numeric" 
+                        <input type="tel" id="nohp" placeholder="Example: 08170291701" pattern="[0-9]+" inputmode="numeric" 
                                oninput="this.value = this.value.replace(/[^0-9]/g, '')" required>
                     </div>
                     <div class="form-group">
@@ -1074,21 +1074,21 @@
             reader.readAsDataURL(file);
         }
         // =========================================================
-        // TRIK URL BERSIH & LOMPAT INSTAN (TANPA SCROLL)
+        // TRIK URL BERSIH & ANTI ERROR 404 SAAT DI-REFRESH/KOPAS
         // =========================================================
 
-        // 1. Fungsi saat menu DIKLIK (Ubah URL + Lompat Instan)
+        // 1. Fungsi saat menu DIKLIK (Ubah URL + Scroll Mulus)
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 const targetId = this.getAttribute('href');
-                if (targetId === '#') return;
+                if (targetId === '#') return; // Abaikan kalau cuma link kosong
 
                 e.preventDefault();
                 const targetElement = document.querySelector(targetId);
                 
                 if (targetElement) {
-                    // Langsung lompat ke bagiannya tanpa animasi
-                    targetElement.scrollIntoView({ behavior: 'auto' });
+                    // Layar ngerosot mulus
+                    targetElement.scrollIntoView({ behavior: 'smooth' });
                     
                     // Ubah teks URL di browser tanpa reload
                     let newPath = targetId === '#home' ? '/' : '/' + targetId.substring(1);
@@ -1097,23 +1097,29 @@
             });
         });
 
-        // 2. Fungsi saat web BARU DIBUKA bawa URL khusus (Lompat Instan)
+       // 2. Fungsi saat web BARU DIBUKA bawa URL khusus (misal /careers atau /careers/)
         window.addEventListener('DOMContentLoaded', () => {
             let path = window.location.pathname; 
             
-            // Bersihkan garis miring di awal dan akhir
+            // Bersihkan garis miring di awal dan akhir (misal "/careers/" otomatis jadi "careers")
             path = path.replace(/^\/|\/$/g, '');
             
+            // Kalau setelah dibersihkan ada isinya (bukan halaman depan doang)
             if (path.length > 0) {
-                const targetId = '#' + path; 
+                const targetId = '#' + path; // Ubah "careers" jadi "#careers"
                 const targetElement = document.querySelector(targetId);
                 
                 if (targetElement) {
-                    // Langsung lompat tanpa jeda animasi
-                    targetElement.scrollIntoView({ behavior: 'auto' });
+                    // Kasih jeda sepersekian detik biar web kelar loading dulu, baru ngerosot otomatis
+                    setTimeout(() => {
+                        targetElement.scrollIntoView({ behavior: 'smooth' });
+                    }, 300);
                 }
             }
         });
     </script>
 </body>
 </html>
+
+
+
